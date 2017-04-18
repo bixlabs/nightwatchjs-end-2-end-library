@@ -11,7 +11,7 @@ _**Automate** your **acceptance tests** and run them in **real browsers**_!
 
 ## How to install
 
-* run ```npm install```
+* run ```npm install nightwatchjs-end2end```
 
 ## What the installation process does
 * It downloads Selenium JAR, chrome and firefox driver for Selenium.
