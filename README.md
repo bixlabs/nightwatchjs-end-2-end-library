@@ -8,6 +8,8 @@ _**Automate** your **acceptance tests** and run them in **real browsers**_!
 ## Dependencies
 * [xvfb](http://tobyho.com/2015/01/09/headless-browser-testing-xvfb/) (For headless tests only)
 * Java 8 (Because we are using the latest Selenium JAR)
+* Depending on the latest ChromeDriver you will need your Chrome version to be above a specific number.
+We can't put a specific number here sadly.
 
 ## How to install
 
@@ -19,31 +21,30 @@ _**Automate** your **acceptance tests** and run them in **real browsers**_!
 * It creates a ``nightwatch.conf.js`` file in the root of your project.
 * It creates some examples in the folder ``./tests/end2end/``.
 * It adds some exceptions to ``.gitignore`` file if it exists.
-* It adds an entry to the _scripts_ key in your _package.json_ if it doesn't exists it will add this:
-    * ``test`` command.
-    * ``test-headless`` command.
-    * If it does exist it will add these (to avoid messing up with your existing configuration):
-    * ``test-nightwatch`` command (does exactly the same as ``test``)
-    * ``test-nightwatch-headless'`` command (does exactly the same as ``test-headless``)
+* It adds an entry to the _scripts_ key in your _package.json_:
+    * ``test-end2end`` command.
+    * ``test-end2end-headless`` command (does exactly the same as ``test-end2end`` but headless for CI environments).
+    * ``test-end2end-all`` command (it runs the test in Chrome and Firefox Browsers).
+    * ``test-end2end-headless-all`` command (same as ``test-end2end-all`` but headless for CI environments).
 
 
-## To run tests (Remember that if you already have a _scripts_ key in your _package.json_ the names will change, see above)
+## To run tests
 
 Have in mind that this command uses [xvfb-maybe](https://www.npmjs.com/package/xvfb-maybe) internally, which tries to run the test with ``xvfb-run`` if we are in a headless Linux Environment, otherwise it will show the tests in the browser:
 
-* ```$ npm test```
+* ```$ npm run test-end2end```
 
 To run the test explicitly headless you can use:
 
-* ```$ npm run test-headless```
+* ```$ npm run test-end2end-headless```
 
 Tests will default to run in Chrome but if you want to run them in Firefox:
 
-* ```$ npm test -- -e firefox```
+* ```$ npm run test-end2end -- -e firefox```
 
 Lastly if you want to run both Chrome and Firefox simultaneously:
 
-* ```$ npm test -- -e default,firefox```
+* ```$ npm run test-end2end-all```
 
 This project is using [ESLint](http://eslint.org/) as part of the tests process, so if you have a linting problem in your test's source code the tests won't run because of it. Always make sure to satisfy linting rules (although you can disable this modifying _test_ script in _package.json_).
 

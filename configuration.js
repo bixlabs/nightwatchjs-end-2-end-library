@@ -35,16 +35,16 @@ function DownloadSeleniumAndChromeDriver() {
 function configureTestsCommandInPackageDotJSON() {
   var packageJSON = JSON.parse(fs.readFileSync('../../package.json', 'utf8'));
   var BROWSER_OR_HEADLESS_TEST_COMMAND = 'xvfb-maybe ./node_modules/.bin/nightwatch';
-  var HEADLESS_TEST_COMMAND = 'xvfb-run ./node_modules/.bin/nightwatch';
+  var HEADLESS_TEST_COMMAND = 'xvfb-run --auto-servernum --server-num=1 ./node_modules/.bin/nightwatch';
 
-  if(packageJSON.scripts) {
-    packageJSON.scripts['test-nightwatch'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
-    packageJSON.scripts['test-nightwatch-headless'] = HEADLESS_TEST_COMMAND;
-  } else {
+  if (!packageJSON.scripts) {
     packageJSON.scripts = {};
-    packageJSON.scripts.test = BROWSER_OR_HEADLESS_TEST_COMMAND;
-    packageJSON.scripts['test-headless'] = HEADLESS_TEST_COMMAND;
   }
+
+  packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
+  packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
+  packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox';
+  packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox';
 
   fs.writeFile('../../package.json', JSON.stringify(packageJSON), 'utf8');
 }
