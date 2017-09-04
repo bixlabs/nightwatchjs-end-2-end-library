@@ -56,7 +56,7 @@ function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
 
 function gitIgnoreInformativeFoldersIfPossible() {
   isGitIgnoreAlreadyWritten('../../', '.gitignore').then(function(alreadyWritten) {
-    if (fs.existsSync('../../.gitignore') && alreadyWritten) {
+    if (fs.existsSync('../../.gitignore') && !alreadyWritten) {
       fs.appendFileSync('../../.gitignore', '\nreports\nscreenshots\nselenium-debug.log');
     }
   })
