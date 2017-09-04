@@ -63,7 +63,7 @@ function gitIgnoreInformativeFoldersIfPossible() {
 }
 
 function isGitIgnoreAlreadyWritten(directory, file) {
-  return findInFiles.findSync('reports|screenshots|selenium-debug.log', directory, file)
+  return findInFiles.findSync('reports', directory, file)
     .then(function(results) {
       return results.length === 0;
     });
