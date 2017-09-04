@@ -1,5 +1,6 @@
 var fs = require('fs');
 var BINPATH = '../nightwatch/bin/';
+var findInFiles = require('find-in-files');
 
 /**
  * selenium-download does exactly what it's name suggests;
@@ -54,19 +55,34 @@ function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
 }
 
 function gitIgnoreInformativeFoldersIfPossible() {
-  if (fs.existsSync('../../.gitignore')) {
-    fs.appendFileSync('../../.gitignore', '\nreports\nscreenshots\nselenium-debug.log');
-  }
+  isGitIgnoreAlreadyWritten('../../', '.gitignore').then(function(alreadyWritten) {
+    if (fs.existsSync('../../.gitignore') && alreadyWritten) {
+      fs.appendFileSync('../../.gitignore', '\nreports\nscreenshots\nselenium-debug.log');
+    }
+  })
+}
+
+function isGitIgnoreAlreadyWritten(directory, file) {
+  return findInFiles.findSync('reports|screenshots|selenium-debug.log', directory, file)
+    .then(function(results) {
+      return results.length === 0;
+    });
 }
 
 function createFolder(dir) {
-  if (!fs.existsSync(dir)) {
+  if (folderDoesntExist(dir)) {
     fs.mkdirSync(dir);
   }
 }
 
+function folderDoesntExist(dir) {
+  return !fs.existsSync(dir);
+}
+
 function copyExampleTestFilesIntoProjectsRoot() {
-  fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
-  fs.createReadStream('./generated-files/nightwatch.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/nightwatch.js'));
-  fs.createReadStream('./generated-files/nightwatch.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/nightwatch.po.js'));
+  if(folderDoesntExist('../../tests/end2end')) {
+    fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
+    fs.createReadStream('./generated-files/nightwatch.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/nightwatch.js'));
+    fs.createReadStream('./generated-files/nightwatch.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/nightwatch.po.js'));
+  }
 }
