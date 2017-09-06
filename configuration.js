@@ -12,6 +12,7 @@ var findInFiles = require('find-in-files');
 DownloadSeleniumAndChromeDriver();
 configureTestsCommandInPackageDotJSON();
 copyDefaultNightwatchConfigurationIntoProjectsRoot();
+copyBrowserStackNightwatchConfigurationIntoProjectsRoot();
 gitIgnoreInformativeFoldersIfPossible();
 createFolder('../../tests');
 createFolder('../../tests/end2end');
@@ -44,8 +45,10 @@ function configureTestsCommandInPackageDotJSON() {
 
   packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
   packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
-  packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox';
-  packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox';
+  packageJSON.scripts['test-end2end-browserstack'] = 'xvfb-maybe ./node_modules/.bin/nightwatch -c ./nightwatch-configuration-browserstack.js';
+  packageJSON.scripts['test-end2end-browserstack-headless'] = 'xvfb-run --auto-servernum --server-num=1 ./node_modules/.bin/nightwatch -c ./nightwatch-configuration-browserstack.js';
+  packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack';
+  packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack-headless';
 
   fs.writeFile('../../package.json', JSON.stringify(packageJSON), 'utf8');
 }
@@ -54,10 +57,14 @@ function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
   fs.createReadStream('./generated-files/nightwatch-configuration.js').pipe(fs.createWriteStream('../../nightwatch.conf.js'));
 }
 
+function copyBrowserStackNightwatchConfigurationIntoProjectsRoot() {
+  fs.createReadStream('./generated-files/nightwatch-configuration-browserstack.js').pipe(fs.createWriteStream('../../nightwatch-browserstack.conf.js'));
+}
+
 function gitIgnoreInformativeFoldersIfPossible() {
   isGitIgnoreAlreadyWritten('../../', '.gitignore').then(function(alreadyWritten) {
     if (fs.existsSync('../../.gitignore') && !alreadyWritten) {
-      fs.appendFileSync('../../.gitignore', '\nreports\nscreenshots\nselenium-debug.log');
+      fs.appendFileSync('../../.gitignore', '\ntest_reports\ntest_screenshots\nselenium-debug.log');
     }
   })
 }

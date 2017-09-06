@@ -28,7 +28,7 @@ We can't put a specific number here sadly.
     * ``test-end2end-headless-all`` command (same as ``test-end2end-all`` but headless for CI environments).
 
 
-## To run tests
+## To run tests in real browsers through plugins
 
 Have in mind that this command uses [xvfb-maybe](https://www.npmjs.com/package/xvfb-maybe) internally, which tries to run the test with ``xvfb-run`` if we are in a headless Linux Environment, otherwise it will show the tests in the browser:
 
@@ -42,9 +42,24 @@ Tests will default to run in Chrome but if you want to run them in Firefox:
 
 * ```$ npm run test-end2end -- -e firefox```
 
-Lastly if you want to run both Chrome and Firefox simultaneously:
+
+## To run tests through BrowserStack
+
+Take into account that you have to BROWSERSTACK_USERNAME and BROWSERSTACK_ACCESS_KEY correctly set for this to work.
+
+* ``$ npm run test-end2end-browserstack``
+
+To run in headless mode you do:
+
+* ``$ npm run test-end2end-browserstack-headless``
+
+Lastly if you want to run in Chrome, Firefox and IE (IE through BrowserStack):
 
 * ```$ npm run test-end2end-all```
+
+and for the headless version of that:
+
+* ``$ npm run test-end2end-headless-all``
 
 This project is using [ESLint](http://eslint.org/) as part of the tests process, so if you have a linting problem in your test's source code the tests won't run because of it. Always make sure to satisfy linting rules (although you can disable this modifying _test_ script in _package.json_).
 
