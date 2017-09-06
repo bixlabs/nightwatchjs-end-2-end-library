@@ -45,8 +45,7 @@ function configureTestsCommandInPackageDotJSON() {
 
   packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
   packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
-  packageJSON.scripts['test-end2end-browserstack'] = 'xvfb-maybe ./node_modules/.bin/nightwatch -c ./nightwatch-configuration-browserstack.js';
-  packageJSON.scripts['test-end2end-browserstack-headless'] = 'xvfb-run --auto-servernum --server-num=1 ./node_modules/.bin/nightwatch -c ./nightwatch-configuration-browserstack.js';
+  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js';
   packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack';
   packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack-headless';
 
@@ -59,6 +58,8 @@ function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
 
 function copyBrowserStackNightwatchConfigurationIntoProjectsRoot() {
   fs.createReadStream('./generated-files/nightwatch-configuration-browserstack.js').pipe(fs.createWriteStream('../../nightwatch-browserstack.conf.js'));
+  fs.createReadStream('./generated-files/browserstack-local-runner.js').pipe(fs.createWriteStream('../../browserstack-local-runner.js'));
+
 }
 
 function gitIgnoreInformativeFoldersIfPossible() {

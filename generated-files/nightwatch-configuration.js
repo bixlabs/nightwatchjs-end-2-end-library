@@ -20,6 +20,7 @@ module.exports = {
     "default": {
       "screenshots": {
         "enabled": true, // if you want to keep screenshots
+        "path": './test_screenshots' //there is an overwrite for this in the test suite
       },
       "globals": {
         "waitForConditionTimeout": 30000 // sometimes internet is slow so wait.

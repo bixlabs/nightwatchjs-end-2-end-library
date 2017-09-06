@@ -13,6 +13,7 @@ nightwatch_config = {
     default: {
       "screenshots": {
         "enabled": true, // if you want to keep screenshots
+        "path": './test_screenshots' //there is an overwrite for this in the test suite
       },
       "globals": {
         "waitForConditionTimeout": 30000 // sometimes internet is slow so wait.
@@ -23,7 +24,8 @@ nightwatch_config = {
         'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
         'browserstack.debug': true,
         'browserstack.local': true,
-        'browser': 'ie'
+        'browser': 'ie',
+        'version': 11
       }
     }
   }
