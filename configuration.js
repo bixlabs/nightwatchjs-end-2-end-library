@@ -73,7 +73,12 @@ function gitIgnoreInformativeFoldersIfPossible() {
 function isGitIgnoreAlreadyWritten(directory, file) {
   return findInFiles.findSync('test_reports', directory, file)
     .then(function(results) {
-      return results[file].count > 0;
+      for (var result in results) {
+        var res = results[result];
+        return res.count > 0;
+      }
+
+      return false;
     });
 }
 
