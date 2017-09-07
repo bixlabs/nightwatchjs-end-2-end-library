@@ -2,6 +2,7 @@ var browserstack = require('browserstack-local');
 
 nightwatch_config = {
   src_folders: ["tests/end2end/test-cases"],
+  output_folder: './test_reports',
 
   selenium: {
     "start_process": false,

@@ -65,7 +65,7 @@ function copyBrowserStackNightwatchConfigurationIntoProjectsRoot() {
 function gitIgnoreInformativeFoldersIfPossible() {
   isGitIgnoreAlreadyWritten('../../', '.gitignore').then(function(alreadyWritten) {
     if (fs.existsSync('../../.gitignore') && !alreadyWritten) {
-      fs.appendFileSync('../../.gitignore', '\ntest_reports\ntest_screenshots\nselenium-debug.log');
+      fs.appendFileSync('../../.gitignore', '\ntest_reports\ntest_screenshots\nselenium-debug.log\nbrowserstack.err');
     }
   })
 }
