@@ -25,7 +25,7 @@ copyExampleTestFilesIntoProjectsRoot();
 function DownloadSeleniumAndChromeDriver() {
   fs.stat(BINPATH + 'selenium.jar', function (err, stat) { // got it?
     if (err || !stat || stat.size < 1) {
-      require('selenium-download').ensure(BINPATH, function(error) {
+      require('selenium-download').ensure(BINPATH, function (error) {
         if (error) throw new Error(error); // no point continuing so exit!
         console.log('✔ Selenium & Chromedriver downloaded to:', BINPATH);
       });
@@ -45,34 +45,24 @@ function configureTestsCommandInPackageDotJSON() {
 
   packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
   packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
-  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js';
+  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari';
   packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack';
-  packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack-headless';
+  packageJSON.scripts['test-end2end-browserstack-ci'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari,chrome,firefox';
 
-  fs.writeFile('../../package.json', JSON.stringify(packageJSON), 'utf8');
-}
-
-function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
-  fs.createReadStream('./generated-files/nightwatch-configuration.js').pipe(fs.createWriteStream('../../nightwatch.conf.js'));
-}
-
-function copyBrowserStackNightwatchConfigurationIntoProjectsRoot() {
-  fs.createReadStream('./generated-files/nightwatch-configuration-browserstack.js').pipe(fs.createWriteStream('../../nightwatch-browserstack.conf.js'));
-  fs.createReadStream('./generated-files/browserstack-local-runner.js').pipe(fs.createWriteStream('../../browserstack-local-runner.js'));
-
-}
-
-function gitIgnoreInformativeFoldersIfPossible() {
-  isGitIgnoreAlreadyWritten('../../', '.gitignore').then(function(alreadyWritten) {
-    if (fs.existsSync('../../.gitignore') && !alreadyWritten) {
-      fs.appendFileSync('../../.gitignore', '\ntest_reports\ntest_screenshots\nselenium-debug.log\nbrowserstack.err');
+  isPackageJSONAlreadyWritten().then(function(isAlreadyWritten) {
+    if(!isAlreadyWritten) {
+      fs.writeFile('../../package.json', JSON.stringify(packageJSON), 'utf8');
     }
-  })
+  });
 }
 
-function isGitIgnoreAlreadyWritten(directory, file) {
-  return findInFiles.findSync('test_reports', directory, file)
-    .then(function(results) {
+function isPackageJSONAlreadyWritten() {
+  return findWordInFile('test-end2end-browserstack-ci', '../../', 'package.json');
+}
+
+function findWordInFile(word, directory, file) {
+  return findInFiles.findSync(word, directory, file)
+    .then(function (results) {
       for (var result in results) {
         var res = results[result];
         return res.count > 0;
@@ -80,6 +70,33 @@ function isGitIgnoreAlreadyWritten(directory, file) {
 
       return false;
     });
+}
+
+function copyDefaultNightwatchConfigurationIntoProjectsRoot() {
+  if (!fs.existsSync('../../nightwatch.conf.js'))
+  fs.createReadStream('./generated-files/nightwatch-configuration.js').pipe(fs.createWriteStream('../../nightwatch.conf.js'));
+}
+
+function copyBrowserStackNightwatchConfigurationIntoProjectsRoot() {
+  if (!fs.existsSync('../../nightwatch-browserstack.conf.js'))
+    fs.createReadStream('./generated-files/nightwatch-configuration-browserstack.js').pipe(fs.createWriteStream('../../nightwatch-browserstack.conf.js'));
+
+
+  if (!fs.existsSync('../../browserstack-local-runner.js'))
+    fs.createReadStream('./generated-files/browserstack-local-runner.js').pipe(fs.createWriteStream('../../browserstack-local-runner.js'));
+
+}
+
+function gitIgnoreInformativeFoldersIfPossible() {
+  isGitIgnoreAlreadyWritten().then(function (isAlreadyWritten) {
+    if (fs.existsSync('../../.gitignore') && !isAlreadyWritten) {
+      fs.appendFileSync('../../.gitignore', '\ntest_reports\ntest_screenshots\nselenium-debug.log\nbrowserstack.err');
+    }
+  })
+}
+
+function isGitIgnoreAlreadyWritten() {
+  return findWordInFile('test_reports', '../../', '.gitignore');
 }
 
 function createFolder(dir) {
@@ -93,7 +110,7 @@ function folderDoesntExist(dir) {
 }
 
 function copyExampleTestFilesIntoProjectsRoot() {
-  if(folderDoesntExist('../../tests/end2end')) {
+  if (folderDoesntExist('../../tests/end2end')) {
     fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
     fs.createReadStream('./generated-files/nightwatch.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/nightwatch.js'));
     fs.createReadStream('./generated-files/nightwatch.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/nightwatch.po.js'));
