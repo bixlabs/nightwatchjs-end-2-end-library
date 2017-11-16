@@ -16,6 +16,8 @@ We can't put a specific number here sadly.
 
 * run ```npm install nightwatchjs-end2end```
 
+After this command you should be able to run most of the commands explain here, this library is intended to work just after installation. You should not need anything else (apart from configuring some environment variables for BrowserStack).
+
 ## What the installation process does
 * It downloads Selenium JAR, Chrome and Firefox driver for Selenium.
 * It installs NightwatchJS.
