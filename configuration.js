@@ -45,8 +45,9 @@ function configureTestsCommandInPackageDotJSON() {
 
   packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
   packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
-  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari';
   packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack';
+  packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack';
+  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari';
   packageJSON.scripts['test-end2end-browserstack-ci'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari,chrome,firefox';
 
   isPackageJSONAlreadyWritten().then(function(isAlreadyWritten) {
@@ -110,9 +111,18 @@ function folderDoesntExist(dir) {
 }
 
 function copyExampleTestFilesIntoProjectsRoot() {
-  if (folderDoesntExist('../../tests/end2end')) {
+  if (areAllTestsFolderEmpties()) {
     fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
     fs.createReadStream('./generated-files/nightwatch.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/nightwatch.js'));
     fs.createReadStream('./generated-files/nightwatch.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/nightwatch.po.js'));
   }
+}
+
+function areAllTestsFolderEmpties() {
+  return isFolderEmpty('../../tests/end2end/test-cases') && isFolderEmpty('../../tests/end2end/page-objects') &&
+    isFolderEmpty('../../tests/end2end/util');
+}
+
+function isFolderEmpty(dir) {
+  return fs.readdirSync(dir).length > 0;
 }
