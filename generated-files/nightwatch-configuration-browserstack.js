@@ -1,5 +1,3 @@
-const browserstack = require('browserstack-local');
-
 const desiredCapabilitiesIe11 = {
   'build': 'NightwatchJS-end2end',
   'browserstack.user': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
@@ -9,9 +7,6 @@ const desiredCapabilitiesIe11 = {
   'browser': 'ie',
   'version': 11
 };
-
-const desiredCapabilitiesIe10 = Object.assign({}, desiredCapabilitiesIe11);
-desiredCapabilitiesIe10.version = 10;
 
 const desiredCapabilitiesSafari = Object.assign({}, desiredCapabilitiesIe11);
 desiredCapabilitiesSafari.browser = 'safari';

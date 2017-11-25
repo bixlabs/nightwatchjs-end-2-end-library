@@ -27,9 +27,9 @@ After this command you should be able to run most of the commands explain here, 
 * It adds an entry to the _scripts_ key in your _package.json_:
     * ``test-end2end`` command.
     * ``test-end2end-headless`` command (does exactly the same as ``test-end2end`` but headless for CI environments).
-    * ``test-end2end-all`` command (it runs the test in Chrome, Firefox and IE10 (ie through BrowserStack though)).
+    * ``test-end2end-all`` command (it runs the test in Chrome, Firefox and IE11 (IE through BrowserStack though)).
     * ``test-end2end-headless-all`` command (Same as the command above it's just the headless version for CI environments).
-    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in IE10 and Safari).
+    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in IE11 and Safari).
     * ``test-end2end-browserstack-ci`` command (Same as the one above, just that this one runs it in 4 different browsers instead of 2, Chrome and Firefox are added).
 
 ## To run tests through BrowserStack (Recommended)
