@@ -47,8 +47,8 @@ function configureTestsCommandInPackageDotJSON() {
   packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
   packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack';
   packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack';
-  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari';
-  packageJSON.scripts['test-end2end-browserstack-ci'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,ie10,safari,chrome,firefox';
+  packageJSON.scripts['test-end2end-browserstack'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,safari';
+  packageJSON.scripts['test-end2end-browserstack-ci'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e default,safari,chrome,firefox';
 
   isPackageJSONAlreadyWritten().then(function(isAlreadyWritten) {
     if(!isAlreadyWritten) {

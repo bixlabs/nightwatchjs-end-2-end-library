@@ -10,14 +10,14 @@ const desiredCapabilitiesIe11 = {
 
 const desiredCapabilitiesSafari = Object.assign({}, desiredCapabilitiesIe11);
 desiredCapabilitiesSafari.browser = 'safari';
-desiredCapabilitiesSafari.version = '';
+desiredCapabilitiesSafari.version = '10.1';
 
 const desiredCapabilitiesChrome = Object.assign({}, desiredCapabilitiesIe11);
 desiredCapabilitiesChrome.browser = 'chrome';
 desiredCapabilitiesChrome.version = '';
 
 const desiredCapabilitiesFirefox = Object.assign({}, desiredCapabilitiesIe11);
-desiredCapabilitiesFirefox.firefox = 'firefox';
+desiredCapabilitiesFirefox.browser = 'firefox';
 desiredCapabilitiesFirefox.version = '';
 
 const nightwatch_config = {
@@ -41,17 +41,14 @@ const nightwatch_config = {
       },
       desiredCapabilities: desiredCapabilitiesIe11
     },
-    ie10: {
-      desiredCapabilities: desiredCapabilitiesIe10
-    },
     safari: {
       desiredCapabilities: desiredCapabilitiesSafari
     },
     firefox: {
-      desiredCapabilities: desiredCapabilitiesFirefox,
+      desiredCapabilities: desiredCapabilitiesFirefox
     },
     chrome: {
-      desiredCapabilities: desiredCapabilitiesChrome,
+      desiredCapabilities: desiredCapabilitiesChrome
     }
   }
 };
