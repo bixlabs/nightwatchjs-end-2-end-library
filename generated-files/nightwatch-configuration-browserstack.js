@@ -8,9 +8,6 @@ const desiredCapabilitiesIe11 = {
   'version': 11
 };
 
-const desiredCapabilitiesSafari = Object.assign({}, desiredCapabilitiesIe11);
-desiredCapabilitiesSafari.browser = 'safari';
-desiredCapabilitiesSafari.version = '10.1';
 
 const desiredCapabilitiesChrome = Object.assign({}, desiredCapabilitiesIe11);
 desiredCapabilitiesChrome.browser = 'chrome';
@@ -37,12 +34,9 @@ const nightwatch_config = {
         "path": './test_screenshots' //there is an overwrite for this in the test suite
       },
       "globals": {
-        "waitForConditionTimeout": 30000 // sometimes internet is slow so wait.
+        "waitForConditionTimeout": 10000 // sometimes internet is slow so wait.
       },
       desiredCapabilities: desiredCapabilitiesIe11
-    },
-    safari: {
-      desiredCapabilities: desiredCapabilitiesSafari
     },
     firefox: {
       desiredCapabilities: desiredCapabilitiesFirefox

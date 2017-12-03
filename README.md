@@ -29,8 +29,8 @@ After this command you should be able to run most of the commands explain here, 
     * ``test-end2end-headless`` command (does exactly the same as ``test-end2end`` but headless for CI environments).
     * ``test-end2end-all`` command (it runs the test in Chrome, Firefox and IE11 (IE through BrowserStack though)).
     * ``test-end2end-headless-all`` command (Same as the command above it's just the headless version for CI environments).
-    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in IE11 and Safari).
-    * ``test-end2end-browserstack-ci`` command (Same as the one above, just that this one runs it in 4 different browsers instead of 2, Chrome and Firefox are added).
+    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in IE11).
+    * ``test-end2end-browserstack-ci`` command (Same as the one above, just that this one runs it in 3 different browsers instead of 1, Chrome and Firefox are added).
 
 ## To run tests through BrowserStack (Recommended)
 
@@ -70,6 +70,9 @@ Tests will default to run in Chrome but if you want to run them in Firefox:
 * For providing environment variables for your project I recommend [dotenv](https://www.npmjs.com/package/dotenv), just follow the instruction they have in their README.md.
 * The installation of this library will create a file  called ``browserstack-local-runner.js`` on top of it you can put the ``require('dotenv').config();``
 * Finally add the 2 environment variables _BROWSERSTACK_USERNAME_ and _BROWSERSTACK_ACCESS_KEY_ to your ``.env`` file. After this, running ``npm run test-end2end-browserstack `` will work as expected and you will see the output in the console and in your BrowserStack's website (with the account of the provided credentials).
+
+## TODOs
+* Safari was removed from the BrowserStack configuration because Safari's Driver has some serious bugs for now and It's impossible to test through Selenium, check [this](https://github.com/SeleniumHQ/selenium/issues/3145) out. Support for Safari will be added back whenever Apple fix Safari's driver. 
 
 
 Credits to [Learning Nightwatch](https://github.com/dwyl/learn-nightwatch), This project was created on top of that, also if you need more information they put some good documentation on it.

@@ -23,7 +23,7 @@ module.exports = {
         "path": './test_screenshots' //there is an overwrite for this in the test suite
       },
       "globals": {
-        "waitForConditionTimeout": 30000 // sometimes internet is slow so wait.
+        "waitForConditionTimeout": 10000 // sometimes internet is slow so wait.
       },
       "desiredCapabilities": { // use Chrome as the default browser for tests
         "browserName": "chrome",
