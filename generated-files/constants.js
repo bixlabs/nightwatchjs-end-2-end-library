@@ -1,4 +1,4 @@
 module.exports = {
-  NIGHTWATCH_JS_URL: 'http://nightwatchjs.org/',
-  SCREENSHOT_PATH: './test_screenshots'
+  BIXLABS_URL: 'https://www.bixlabs.com/',
+  GOOGLE_URL: 'https://www.google.com'
 };
