@@ -1,14 +1,30 @@
 {
   "name": "nightwatchjs-end2end",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "It provides the initial configutation to start implementing end2end tests for your web apps with NightwatchJS.",
   "engines": {
-    "node": ">= 0.12.18"
+    "node": ">= 8.0.0"
   },
   "scripts": {
     "postinstall": "node configuration.js"
   },
   "author": "Bixlabs",
+  "keywords": [
+    "test",
+    "tests",
+    "endtoend",
+    "end2end",
+    "nightwatchjs",
+    "selenium",
+    "headless",
+    "browserstack"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
   "homepage": "https://github.com/reviewsbix/strongbox-end-to-end-tests",
   "dependencies": {
     "eslint": "^3.19.0",
