@@ -76,11 +76,11 @@ Tests will default to run in Chrome but if you want to run them in Firefox:
 In the example generated we have 3 page objects, a simple test case, a constants module and a page factory module.
 
 * Notice that the 3 page objects form a little dependency tree, Bixlabs Page Object depends on Google Result, Google Result depends on Google search. This approach let us
-reuse code in a easy way (and we present the intentions of the code better through the dependencies).
+reuse code in an easy way (and we present the intentions of the code better through the dependencies).
 * The test case is where the page objects are used and what actually makes NightwatchJS/Selenium run our code in the browser.
-* The constants module is just a place to put constants.
-* The page factory module is where we put our initialization of objects, the idea behind this file is that we don't have to deal with dependencies
-in the test cases files, instead we just call a function and the object will come correctly constructed with it's dependencies.
+* The constants module... well it's the constans module.
+* The page factory module is where we put our initialization of objects. The idea behind this file is that we don't have to deal with dependencies
+in the test cases files, instead we just call a function and the object will come correctly constructed with dependencies satisfied.
 
 ## TODOs
 * Safari was removed from the BrowserStack configuration because Safari's Driver has some serious bugs for now and It's impossible to test through Selenium, check [this](https://github.com/SeleniumHQ/selenium/issues/3145) out. Support for Safari will be added back whenever Apple fix Safari's driver. 
