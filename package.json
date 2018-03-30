@@ -1,6 +1,6 @@
 {
   "name": "nightwatchjs-end2end",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "It provides the initial configutation to start implementing end2end tests for your web apps with NightwatchJS.",
   "engines": {
     "node": ">= 8.0.0"
@@ -19,12 +19,7 @@
     "headless",
     "browserstack"
   ],
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://www.opensource.org/licenses/mit-license.php"
-    }
-  ],
+  "license": "MIT" ,
   "homepage": "https://github.com/reviewsbix/strongbox-end-to-end-tests",
   "dependencies": {
     "eslint": "^3.19.0",
