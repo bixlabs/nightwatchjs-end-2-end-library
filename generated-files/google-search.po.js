@@ -7,19 +7,8 @@ class GoogleSearch {
 
   searchBixlabs() {
     return this.configureURL()
-      .waitForBody()
       .fillGoogleInput()
       .search();
-  }
-
-  configureURL() {
-    this.browser.url(this.constans.GOOGLE_URL);
-    return this;
-  }
-
-  waitForBody() {
-    this.browser.waitForElementVisible('body');
-    return this;
   }
 
   fillGoogleInput() {
