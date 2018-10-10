@@ -115,6 +115,7 @@ function copyExampleTestFilesIntoProjectsRoot() {
     fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
     fs.createReadStream('./generated-files/page-factory.js').pipe(fs.createWriteStream('../../tests/end2end/util/page-factory.js'));
     fs.createReadStream('./generated-files/bixlabs.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/bixlabs.js'));
+    fs.createReadStream('./generated-files/initializer.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/initializer.po.js'));
     fs.createReadStream('./generated-files/bixlabs.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/bixlabs.po.js'));
     fs.createReadStream('./generated-files/google-search.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/google-search.po.js'));
     fs.createReadStream('./generated-files/google-result.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/google-result.po.js'));
