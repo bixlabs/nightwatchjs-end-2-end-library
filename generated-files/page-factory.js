@@ -1,4 +1,3 @@
-require('dotenv').config();
 const constants = require('./constants');
 const GoogleSearch = require('../page-objects/google-search.po');
 const GoogleResult = require('../page-objects/google-result.po');
