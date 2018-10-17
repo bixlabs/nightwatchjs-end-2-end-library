@@ -6,11 +6,11 @@ _**Automate** your **acceptance tests** and run them in **real browsers**_!
 
 
 ## Dependencies
-* A BrowserStack account if you want to run the tests through their platform.
 * [xvfb](http://tobyho.com/2015/01/09/headless-browser-testing-xvfb/) (For headless tests only)
-* Java 8 (Because we are using the latest Selenium JAR)
-* Depending on the latest ChromeDriver you will need your Chrome version to be above a specific number.
+* Java (The version of Java depends on what Version the [latest Selenium](https://www.seleniumhq.org/download/) needs, Selenium 3.x requires Java 8 which was the latest at the time of writing this).
+* Depending on the [latest ChromeDriver](http://chromedriver.chromium.org/downloads) you will need your Chrome version to be above a specific number.
 We can't put a specific number here sadly.
+* A [BrowserStack](https://www.browserstack.com/) account if you want to run the tests through their platform.
 
 ## How to install
 
@@ -24,32 +24,45 @@ After this command you should be able to run most of the commands explain here, 
 * It creates a ``nightwatch.conf.js`` file in the root of your project.
 * It creates some examples in the folder ``./tests/end2end/`` so you have something to see this working right away (we are using [PageObject pattern](https://martinfowler.com/bliki/PageObject.html)).
 * It adds some exceptions to ``.gitignore`` file if it exists.
-* It adds an entry to the _scripts_ key in your _package.json_:
+* It adds some entries to the _scripts_ key in your _package.json_:
     * ``test-end2end`` command.
     * ``test-end2end-headless`` command (does exactly the same as ``test-end2end`` but headless for CI environments).
     * ``test-end2end-all`` command (it runs the test in Chrome, Firefox and IE11 (IE through BrowserStack though)).
     * ``test-end2end-headless-all`` command (Same as the command above it's just the headless version for CI environments).
-    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in IE11).
-    * ``test-end2end-browserstack-ci`` command (Same as the one above, just that this one runs it in 3 different browsers instead of 1, Chrome and Firefox are added).
+    * ``test-end2end-browserstack`` command (It runs the tests through the BrowserStack platform in Chrome).
+    * ``test-end2end-browserstack-chrome`` command (Same as the one above)
+    * ``test-end2end-browserstack-firefox`` command (Same but in Firefox)
+    * ``test-end2end-browserstack-safari`` command (Same but in Safari)
+    * ``test-end2end-browserstack-ieedge`` command (Same but in Edge)
+    * ``test-end2end-browserstack-ie11`` command (Same but in IE11)
+    * ``test-end2end-browserstack-ie10`` command (Same but in IE10)
 
 ## To run tests through BrowserStack (Recommended)
 
 Consider that you need a _BROWSERSTACK_USERNAME_ and _BROWSERSTACK_ACCESS_KEY_ environment variables correctly set for this to work.
-I recommend this way because it's easier to tests in multiple Browsers without any struggle, plus BrowserStack tests run in parallel.
+I recommend this way because it's easier to tests in multiple Browsers without any struggle.
 
 * ``$ npm run test-end2end-browserstack``
 
-To run in headless mode you do:
-
-* ``$ npm run test-end2end-browserstack-headless``
-
-Lastly if you want to run in Chrome, Firefox (real Browsers) and IE (IE through BrowserStack):
+If you want to run in Chrome, Firefox (real Browsers) and IE (IE through BrowserStack):
 
 * ```$ npm run test-end2end-all```
 
 and for the headless version of that:
 
 * ``$ npm run test-end2end-headless-all``
+
+Lastly you can configure whatever browser you want using the existing commands that are created through this library for different browsers, so running:
+
+* ``$ npm run test-end2end-browserstack``
+
+Will run the tests in BrowserStack but only for Chrome browser, if you want to add more browsers just check your _package.json_ and you will see that there are more options to do so.
+The idea is that you add those to the same `test-end2end-browserstack` with `&&`. An example of that command for running all the possible configurations that this library provides:
+
+* ``"test-end2end-browserstack": "npm run test-end2end-browserstack-ci-ieedge && npm run test-end2end-browserstack-ci-ie11 && npm run test-end2end-browserstack-ci-ie10 && npm run test-end2end-browserstack-ci-chrome && npm run test-end2end-browserstack-ci-firefox && test-end2end-browserstack-ci-safari"``
+
+Of course you can use those as you wish depending on your needs.
+
 
 ## To run tests in real Browsers through plugins
 
@@ -68,7 +81,7 @@ Tests will default to run in Chrome but if you want to run them in Firefox:
 ## Misc (BrowserStack environment configuration)
 
 * For providing environment variables for your project I recommend [dotenv](https://www.npmjs.com/package/dotenv), just follow the instruction they have in their README.md.
-* The installation of this library will create a file  called ``browserstack-local-runner.js`` on top of it you can put the ``require('dotenv').config();``
+* The installation of this library will create a file  called ``browserstack-local-runner.js`` on top of it you can put the ``require('dotenv').config();`` line.
 * Finally add the 2 environment variables _BROWSERSTACK_USERNAME_ and _BROWSERSTACK_ACCESS_KEY_ to your ``.env`` file. After this, running ``npm run test-end2end-browserstack `` will work as expected and you will see the output in the console and in your BrowserStack's website (with the account of the provided credentials).
 
 ## Explanation of the example generated.
@@ -82,10 +95,5 @@ reuse code in an easy way (and we present the intentions of the code better thro
 * The page factory module is where we put our initialization of objects. The idea behind this file is that we don't have to deal with dependencies
 in the test cases files, instead we just call a function and the object will come correctly constructed with dependencies satisfied.
 
-## TODOs
-* Safari was removed from the BrowserStack configuration because Safari's Driver has some serious bugs for now and It's impossible to test through Selenium, check [this](https://github.com/SeleniumHQ/selenium/issues/3145) out. Support for Safari will be added back whenever Apple fix Safari's driver. 
-
 
 Credits to [Learning Nightwatch](https://github.com/dwyl/learn-nightwatch), This project was created on top of that, also if you need more information they put some good documentation on it.
-
-There is also a [standalone project](https://github.com/bixlabs/nightwatchjs-end-2-end-standalone) of this library.
