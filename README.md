@@ -86,12 +86,13 @@ Tests will default to run in Chrome but if you want to run them in Firefox:
 
 ## Explanation of the example generated.
 
-In the example generated we have 3 page objects, a simple test case, a constants module and a page factory module.
+In the example generated we have 4 page objects, a simple test case, a constants module and a page factory module.
 
-* Notice that the 3 page objects form a little dependency tree, Bixlabs Page Object depends on Google Result, Google Result depends on Google search. This approach let us
+* Notice that the 4 page objects form a little dependency tree, Bixlabs Page Object depends on Google Result, Google Result depends on Google search. This approach let us
 reuse code in an easy way (and we present the intentions of the code better through the dependencies).
+* The initializer is where we put the basic options for opening the browser.
 * The test case is where the page objects are used and what actually makes NightwatchJS/Selenium run our code in the browser.
-* The constants module... well it's the constans module.
+* The constants module... well it's the constants module.
 * The page factory module is where we put our initialization of objects. The idea behind this file is that we don't have to deal with dependencies
 in the test cases files, instead we just call a function and the object will come correctly constructed with dependencies satisfied.
 
