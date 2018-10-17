@@ -1,7 +1,10 @@
 class GoogleResult {
-  constructor(browser, googleSearch) {
+  constructor(browser, constants, googleSearch) {
     this.browser = browser;
+    this.constants = constants;
     this.googleSearch = googleSearch;
+
+    this.BIXLABS_SEARCH_RESULT_SELECTOR = `a[href="${this.constants.BIXLABS_URL}"]`;
   }
 
   goToBixlabs() {
@@ -11,12 +14,12 @@ class GoogleResult {
   }
 
   waitForSearchToBeComplete() {
-    this.browser.waitForElementPresent('a[href="https://www.bixlabs.com/"]');
+    this.browser.waitForElementPresent(this.BIXLABS_SEARCH_RESULT_SELECTOR);
     return this;
   }
 
   clickBixlabsURL() {
-    return this.browser.click('a[href="https://www.bixlabs.com/"]');
+    return this.browser.click(this.BIXLABS_SEARCH_RESULT_SELECTOR);
   }
 }
 

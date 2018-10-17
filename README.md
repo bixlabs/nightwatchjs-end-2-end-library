@@ -39,7 +39,7 @@ After this command you should be able to run most of the commands explain here, 
 
 ## To run tests through BrowserStack (Recommended)
 
-Consider that you need a _BROWSERSTACK_USERNAME_ and _BROWSERSTACK_ACCESS_KEY_ environment variables correctly set for this to work.
+Consider that you need a _BROWSERSTACK_USERNAME_ and _BROWSERSTACK_ACCESS_KEY_ environment variables correctly set for this to work, , also make sure that the application is running locally and set the _ENVIRONMENT_TESTING_URL_ to the corresponding url and port.
 I recommend this way because it's easier to tests in multiple Browsers without any struggle.
 
 * ``$ npm run test-end2end-browserstack``
