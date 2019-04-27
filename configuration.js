@@ -3,7 +3,7 @@ var BINPATH = '../nightwatch/bin/';
 var findInFiles = require('find-in-files');
 
 /**
- * selenium-download does exactly what it's name suggests;
+ * selenium-download does exactly what its name suggests;
  * downloads (or updates) the version of Selenium (& chromedriver)
  * on your localhost where it will be used by Nightwatch.
  /the following code checks for the existence of `selenium.jar` before trying to run our tests.
