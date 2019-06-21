@@ -56,7 +56,7 @@ function configureTestsCommandInPackageDotJSON() {
     packageJSON.scripts['test-end2end-browserstack-ie11'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie11';
     packageJSON.scripts['test-end2end-browserstack-ie10'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie10';
 
-    fs.writeFile('../../package.json', JSON.stringify(packageJSON), 'utf8');
+    fs.writeFileSync('../../package.json', JSON.stringify(packageJSON), 'utf8');
   }
 }
 
