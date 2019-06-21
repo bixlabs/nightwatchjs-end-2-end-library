@@ -43,7 +43,7 @@ function configureTestsCommandInPackageDotJSON() {
     packageJSON.scripts = {};
   }
 
-  if(packageJSON.scripts['test-end2end-browserstack'] !== undefined) {
+  if(packageJSON.scripts['test-end2end-browserstack'] === undefined) {
     packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
     packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
     packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack-ie11';
