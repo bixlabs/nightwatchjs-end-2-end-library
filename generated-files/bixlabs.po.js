@@ -1,39 +1,16 @@
 class Bixlabs {
-  constructor(browser, constants, googleResult) {
+  constructor(browser) {
     this.browser = browser;
-    this.constants = constants;
-    this.googleResult = googleResult;
-
-    this.BIXLABS_LOGO_SELECTOR = `img[src="${this.constants.BIXLABS_URL}wp-content/uploads/2017/05/Bixlabs_Logo.png"]`;
-    this.BIXLABS_CONTACT_BUTTON_SELECTOR = `a[href="${this.constants.BIXLABS_URL}contact/"]`
+    this.BIXLABS_NAME_IN_TAB_TITLE = `meta[name="title"]`;
   }
 
   checkWebsite() {
-    this.googleResult.goToBixlabs();
-    return this.hasBixlabsLogo()
-      .hasContactButton()
-      .hasClutchReview()
-      .hasChatBubble();
+    return this.hasBixlabsInTabTitle()
   }
 
-  hasBixlabsLogo() {
-    this.browser.waitForElementPresent(this.BIXLABS_LOGO_SELECTOR);
+  hasBixlabsInTabTitle() {
+    this.browser.waitForElementPresent(this.BIXLABS_NAME_IN_TAB_TITLE);
     return this;
-  }
-
-  hasContactButton() {
-    this.browser.waitForElementPresent(this.BIXLABS_CONTACT_BUTTON_SELECTOR);
-    return this;
-  }
-
-  hasClutchReview() {
-    this.browser.waitForElementPresent('.clutch-widget[data-url="https://clutch.co"]');
-    return this;
-  }
-
-  hasChatBubble() {
-    return this.browser.waitForElementPresent('iframe#drift-widget');
-
   }
 }
 

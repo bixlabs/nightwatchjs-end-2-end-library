@@ -13,7 +13,7 @@ class Initializer {
     }
   
     configureURL() {
-      this.browser.url(this.constants.ENVIRONMENT_TESTING_URL);
+      this.browser.url(this.constants.BIXLABS_URL);
     }
   
     waitForBody() {
@@ -22,4 +22,3 @@ class Initializer {
   }
   
   module.exports = Initializer;
-  
