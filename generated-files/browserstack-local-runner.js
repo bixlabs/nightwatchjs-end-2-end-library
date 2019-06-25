@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var Nightwatch = require('nightwatch');
-var browserstack = require('browserstack-local');
+var browserstack = require('./node_modules/browserstack-local');
 var bs_local;
 
 try {
