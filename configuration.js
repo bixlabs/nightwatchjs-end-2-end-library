@@ -1,5 +1,5 @@
 var fs = require('fs');
-var BINPATH = '../nightwatch/bin/';
+var BINPATH = '../nightwatchjs-end2end/bin/';
 var findInFiles = require('find-in-files');
 
 /**
