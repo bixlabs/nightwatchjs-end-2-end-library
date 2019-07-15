@@ -53,6 +53,8 @@ desiredCapabilitiesChrome.os = 'Windows';
 desiredCapabilitiesChrome.browser = 'chrome';
 desiredCapabilitiesChrome.nativeEvents = false;
 desiredCapabilitiesChrome.elementScrollBehavior = 0;
+// Why we need this: https://github.com/nightwatchjs/nightwatch/issues/2118
+desiredCapabilitiesChrome.chromeOptions = {w3c: false};
 
 const desiredCapabilitiesFirefox = Object.assign({}, desiredCapabilitiesDefault);
 desiredCapabilitiesFirefox.os = 'Windows';

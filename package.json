@@ -1,6 +1,6 @@
 {
   "name": "nightwatchjs-end2end",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "description": "It provides the initial configutation to start implementing end2end tests for your web apps with NightwatchJS.",
   "engines": {
     "node": ">= 8.0.0"

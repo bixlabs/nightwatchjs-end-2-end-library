@@ -28,7 +28,11 @@ module.exports = {
       "desiredCapabilities": { // use Chrome as the default browser for tests
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        'chromeOptions': {
+          'w3c': false,
+          'args': ['--no-sandbox']
+        }
       }
     },
 
