@@ -110,9 +110,11 @@ function createFolder(dir) {
 }
 
 function requiresAdditionOrManipulationOfPackageJSON() {
-  return areAllTestsFolderEmpties() && hasKnownCommandsInPackageJSON().then(function(result) {
-    return !result
-  });
+  return areAllTestsFolderEmpties().then(function(areEmpty) {
+    return areEmpty && hasKnownCommandsInPackageJSON().then(function(result) {
+      return !result
+    });
+  })
 }
 
 function hasKnownCommandsInPackageJSON() {
