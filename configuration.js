@@ -112,7 +112,7 @@ function createFolder(dir) {
 function requiresAdditionOrManipulationOfPackageJSON() {
   return areAllTestsFolderEmpties() && hasKnownCommandsInPackageJSON().then(function(result) {
     return !result
-  })
+  });
 }
 
 function hasKnownCommandsInPackageJSON() {
@@ -138,8 +138,13 @@ function copyExampleTestFilesIntoProjectsRoot() {
 }
 
 function areAllTestsFolderEmpties() {
-  return isFolderEmpty('../../tests/end2end/test-cases') && isFolderEmpty('../../tests/end2end/page-objects') &&
-    isFolderEmpty('../../tests/end2end/util');
+  return new Promise(function(fulfill, reject) {
+    if (isFolderEmpty('../../tests/end2end/test-cases') && isFolderEmpty('../../tests/end2end/page-objects') &&
+      isFolderEmpty('../../tests/end2end/util')) {
+      fulfill(true);
+    }
+    fulfill(false);
+  });
 }
 
 function isFolderEmpty(dir) {
