@@ -43,21 +43,23 @@ function configureTestsCommandInPackageDotJSON() {
     packageJSON.scripts = {};
   }
 
-  if(packageJSON.scripts['test-end2end-browserstack'] === undefined) {
-    packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
-    packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
-    packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack-ie11';
-    packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack-ie11';
-    packageJSON.scripts['test-end2end-browserstack'] = 'npm run test-end2end-browserstack-chrome';
-    packageJSON.scripts['test-end2end-browserstack-chrome'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e chrome';
-    packageJSON.scripts['test-end2end-browserstack-firefox'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e firefox';
-    packageJSON.scripts['test-end2end-browserstack-safari'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e safari';
-    packageJSON.scripts['test-end2end-browserstack-ieedge'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ieedge';
-    packageJSON.scripts['test-end2end-browserstack-ie11'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie11';
-    packageJSON.scripts['test-end2end-browserstack-ie10'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie10';
+  requiresAdditionOrManipulationOfPackageJSON().then(function(result) {
+    if (result) {
+      packageJSON.scripts['test-end2end'] = BROWSER_OR_HEADLESS_TEST_COMMAND;
+      packageJSON.scripts['test-end2end-headless'] = HEADLESS_TEST_COMMAND;
+      packageJSON.scripts['test-end2end-all'] = 'npm run test-end2end -- -e default,firefox && npm run test-end2end-browserstack-ie11';
+      packageJSON.scripts['test-end2end-headless-all'] = 'npm run test-end2end-headless -- -e default,firefox && npm run test-end2end-browserstack-ie11';
+      packageJSON.scripts['test-end2end-browserstack'] = 'npm run test-end2end-browserstack-chrome';
+      packageJSON.scripts['test-end2end-browserstack-chrome'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e chrome';
+      packageJSON.scripts['test-end2end-browserstack-firefox'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e firefox';
+      packageJSON.scripts['test-end2end-browserstack-safari'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e safari';
+      packageJSON.scripts['test-end2end-browserstack-ieedge'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ieedge';
+      packageJSON.scripts['test-end2end-browserstack-ie11'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie11';
+      packageJSON.scripts['test-end2end-browserstack-ie10'] = 'node browserstack-local-runner.js -c ./nightwatch-browserstack.conf.js -e ie10';
 
-    fs.writeFileSync('../../package.json', JSON.stringify(packageJSON), 'utf8');
-  }
+      fs.writeFileSync('../../package.json', JSON.stringify(packageJSON), 'utf8');
+    }
+  });
 }
 
 function findWordInFile(word, directory, file) {
@@ -100,23 +102,39 @@ function isGitIgnoreAlreadyWritten() {
 }
 
 function createFolder(dir) {
-  if (folderDoesntExist(dir)) {
-    fs.mkdirSync(dir);
-  }
+  requiresAdditionOrManipulationOfPackageJSON().then(function(result) {
+    if (result) {
+      fs.mkdirSync(dir);
+    }
+  });
 }
 
-function folderDoesntExist(dir) {
-  return !fs.existsSync(dir);
+function requiresAdditionOrManipulationOfPackageJSON() {
+  return areAllTestsFolderEmpties() && hasKnownCommandsInPackageJSON().then(function(result) {
+    return !result
+  })
+}
+
+function hasKnownCommandsInPackageJSON() {
+  return findWordInFile("test-end2end-browserstack-chrome", '../../', 'package.json').then(function(chromePresent) {
+    return chromePresent && findWordInFile("test-end2end-browserstack-firefox", '../../', 'package.json').then(function(firefoxPresent) {
+      return firefoxPresent &&  findWordInFile("test-end2end", '../../', 'package.json').then(function(testPresent) {
+        return testPresent && findWordInFile("xvfb-maybe", '../../', 'package.json')
+      });
+    });
+  });
 }
 
 function copyExampleTestFilesIntoProjectsRoot() {
-  if (areAllTestsFolderEmpties()) {
-    fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
-    fs.createReadStream('./generated-files/page-factory.js').pipe(fs.createWriteStream('../../tests/end2end/util/page-factory.js'));
-    fs.createReadStream('./generated-files/bixlabs.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/bixlabs.js'));
-    fs.createReadStream('./generated-files/initializer.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/initializer.po.js'));
-    fs.createReadStream('./generated-files/bixlabs.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/bixlabs.po.js'));
-  }
+  requiresAdditionOrManipulationOfPackageJSON().then(function(result) {
+    if (result) {
+      fs.createReadStream('./generated-files/constants.js').pipe(fs.createWriteStream('../../tests/end2end/util/constants.js'));
+      fs.createReadStream('./generated-files/page-factory.js').pipe(fs.createWriteStream('../../tests/end2end/util/page-factory.js'));
+      fs.createReadStream('./generated-files/bixlabs.js').pipe(fs.createWriteStream('../../tests/end2end/test-cases/bixlabs.js'));
+      fs.createReadStream('./generated-files/initializer.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/initializer.po.js'));
+      fs.createReadStream('./generated-files/bixlabs.po.js').pipe(fs.createWriteStream('../../tests/end2end/page-objects/bixlabs.po.js'));
+    }
+  });
 }
 
 function areAllTestsFolderEmpties() {
