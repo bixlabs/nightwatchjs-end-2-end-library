@@ -1,7 +1,7 @@
 class Bixlabs {
   constructor(browser) {
     this.browser = browser;
-    this.BIXLABS_NAME_IN_TAB_TITLE = `meta[name="title"]`;
+    this.BIXLABS_NAME_IN_TAB_TITLE = 'meta[content="Bixlabs | Custom Software Development | Houston - Montevideo"]';
   }
 
   checkWebsite() {
