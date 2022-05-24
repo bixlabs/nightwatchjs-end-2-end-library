@@ -150,5 +150,8 @@ function areAllTestsFolderEmpties() {
 }
 
 function isFolderEmpty(dir) {
-  return fs.readdirSync(dir).length === 0;
+  if (fs.existsSync(dir)) {
+    return fs.readdirSync(dir).length === 0;
+  }
+  return true;
 }
